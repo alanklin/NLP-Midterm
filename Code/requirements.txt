@@ -1,0 +1,10 @@
+datasets==3.3.1
+geotext==0.4.0
+nltk==3.9.1
+numpy==1.26.4
+pandas==2.2.3
+scikit_learn==1.3.0
+spacy==3.8.4
+spacymoji==3.1.0
+torch==2.6.0.dev20241109
+transformers==4.49.0
