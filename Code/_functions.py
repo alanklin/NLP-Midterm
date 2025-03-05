@@ -9,11 +9,11 @@ import re
 import spacy
 from geotext import GeoText
 import torch
-from transformers import BertTokenizer, BertForSequenceClassification, Trainer, TrainingArguments
+#from transformers import BertTokenizer, BertForSequenceClassification, Trainer, TrainingArguments
 from sklearn.model_selection import train_test_split
-from datasets import Dataset
+#from datasets import Dataset
 
-from transformers import pipeline
+#from transformers import pipeline
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
@@ -48,7 +48,10 @@ def extract_country(text):
     return list(countries) if countries else None
 
 import nltk
-from nltk.sentiment import SentimentIntensityAnalyzer
+
+# Download the VADER lexicon if not already downloaded
+nltk.download('vader_lexicon')
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # Download the VADER lexicon if not already downloaded
 nltk.download('vader_lexicon')
@@ -68,3 +71,11 @@ def get_sentiment_label(score):
         return 'negative'
     else:
         return 'neutral'
+    
+    
+def get_relative_path():
+    """Get the relative path from Code/... to Data/vader_scores."""
+    base_path = Path(__file__).resolve().parent
+    target_path = base_path.parent / 'Data' / 'vader_scores'
+    return target_path
+
