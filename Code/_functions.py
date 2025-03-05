@@ -60,9 +60,14 @@ nltk.download('vader_lexicon')
 sia = SentimentIntensityAnalyzer()
 
 def analyze_sentiment_vader(text):
-    """Analyze sentiment using VADER and return the compound score."""
-    return sia.polarity_scores(text)['compound']
-
+    """Analyze sentiment using VADER and return the compound score along with proportion scores."""
+    scores = sia.polarity_scores(text)
+    return {
+        'compound': scores['compound'],
+        'positive': scores['pos'],
+        'neutral': scores['neu'],
+        'negative': scores['neg']
+    }
 def get_sentiment_label(score):
     """Convert VADER compound score into sentiment labels."""
     if score > 0:
