@@ -9,6 +9,10 @@ import re
 import spacy
 from geotext import GeoText
 import torch
+
+import demoji
+demoji.download_codes()
+
 #from transformers import BertTokenizer, BertForSequenceClassification, Trainer, TrainingArguments
 from sklearn.model_selection import train_test_split
 #from datasets import Dataset
@@ -31,7 +35,14 @@ def clean_data(df):
 def preprocess_text(text):
     """Clean and preprocess text by removing URLs, special characters, and lowercasing."""
     text = re.sub(r'http\S+|www\.\S+', '', text)  # Remove URLs
-    text = re.sub(r'[^a-zA-Z\s]', '', text)  # Remove special characters
+    text = re.sub(r'\n', ' ', text)  # Remove new lines
+
+    # remove emojis
+    emojis = demoji.findall(text)
+    for key in emojis.keys():
+        text = text.replace(key, emojis[key].replace(":", " "))
+
+    # NOTE : DO NOT ELIMINATE THE PUNCTUATION HERE
     text = text.lower().strip()  # Convert to lowercase
     return text
 
